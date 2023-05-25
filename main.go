@@ -9,6 +9,6 @@ func main() {
 	utils.InitConfig()
 	utils.InitMySQL()
 	r := router.Router()
-
+	r.Use(utils.Cors())
 	r.Run()
 }
