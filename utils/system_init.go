@@ -5,6 +5,7 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/go-xorm/xorm"
 	"github.com/spf13/viper"
+	"xorm.io/core"
 )
 
 var db *xorm.Engine
@@ -28,6 +29,12 @@ func InitMySQL() *xorm.Engine {
 	if err != nil {
 		panic(err)
 	}
+	err = db.Ping()
+	if err != nil {
+		panic(err)
+	}
+
+	db.SetMapper(core.SnakeMapper{})
 	return db
 }
 

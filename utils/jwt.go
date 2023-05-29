@@ -35,7 +35,7 @@ func GetToken(username string, userId int) string {
 	return tokenString
 }
 
-func ParseToken(tokenString string) bool {
+func ParseToken(tokenString string) (bool, string, int) {
 
 	// 使用claims解析token
 	tkn, err := jwt.ParseWithClaims(tokenString, &Claims{}, func(token *jwt.Token) (interface{}, error) {
@@ -43,21 +43,21 @@ func ParseToken(tokenString string) bool {
 	})
 	if err != nil {
 		fmt.Println("解析token时出错")
-		return false
+		return false, "", 0
 	}
 	if !tkn.Valid {
 		fmt.Println("无效的token")
-		return false
+		return false, "", 0
 	}
 
 	// 提取claims
 	claims, ok := tkn.Claims.(*Claims)
 	if !ok {
 		fmt.Println("无法解析claims")
-		return false
+		return false, "", 0
 	}
 
 	// 打印claims中的用户名
 	fmt.Println(claims.Username)
-	return true
+	return true, claims.Username, claims.UserId
 }
