@@ -222,5 +222,25 @@ goods.GET("", service.GoodsSelectAll)
 参数：第一个参数 "" 表示路由路径为空，即 /goods；
 
 
+接下来讲一下怎么通过写sql的方式来操作数据库 这里用userDao里的代码作为示例
+```
+func GetPermissions(userId int) []string {
+	// 获取数据库连接
+	db := utils.GetDb()
+
+	// 构建 SQL 查询语句
+	sql := "select name from permission where id in (select permission_id from role_permission where role_id = (select role_id from user_role where user_id = ?)) "
+
+	// 创建一个空的权限列表
+	var permissionList []string
+
+	// 查询数据库，将查询结果存储在 permissionList 中
+	db.SQL(sql, userId).Find(&permissionList)
+
+	// 返回权限列表
+	return permissionList
+}
+```
+
 
 
