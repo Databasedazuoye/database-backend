@@ -2,6 +2,7 @@
 
 ## 启动项目
 ```
+go env -w GOPROXY=https://goproxy.cn
 go mod tidy
 go run main.go
 ```
