@@ -1,2 +1,2 @@
 mysql:
-  dns: "root:root@tcp(127.0.0.1:3306)/goods_management?charset=utf8&parseTime=True&loc=Local"
+  dns: "goods_management:qweewqQWEEWQ@tcp(113.125.103.168:3306)/goods_management?charset=utf8&parseTime=True&loc=Local"

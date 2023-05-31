@@ -195,6 +195,7 @@ func Router() *gin.Engine {
 		goods.DELETE("/:id", service.GoodsDeleteById)
 		goods.GET("", service.GoodsSelectAll)
 	}
+}
 ```
 
 本代码创建了一个路由分组 /goods，并且在该分组下面注册了四个 HTTP 请求处理函数。以下是对每个函数的解释：
@@ -229,13 +230,13 @@ func GetPermissions(userId int) []string {
 	// 获取数据库连接
 	db := utils.GetDb()
 
-	// 构建 SQL 查询语句
+	// 构建 SQL 查询语句  注意，此处的sql语句中有一个'?' 后面会通过函数来把这个问号替换成其他值 来预防sql注入
 	sql := "select name from permission where id in (select permission_id from role_permission where role_id = (select role_id from user_role where user_id = ?)) "
 
 	// 创建一个空的权限列表
 	var permissionList []string
 
-	// 查询数据库，将查询结果存储在 permissionList 中
+	// 查询数据库，将查询结果存储在 permissionList 中 
 	db.SQL(sql, userId).Find(&permissionList)
 
 	// 返回权限列表
