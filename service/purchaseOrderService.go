@@ -59,3 +59,25 @@ func formatTimeString(timeString string) string {
 	formattedTime := t.Format("2006-01-02 15:04:05")
 	return formattedTime
 }
+
+func Review(c *gin.Context) {
+	param := c.Query("status")
+	id, _ := strconv.Atoi(c.Query("id"))
+
+	var s string
+	if param == "1" {
+		s = "审核通过"
+	} else {
+		s = "拒绝通过"
+	}
+	i := dao.Review(id, s)
+	if i == 0 {
+		c.JSON(400, gin.H{
+			"msg": "审核失败",
+		})
+		return
+	}
+	c.JSON(200, gin.H{
+		"msg": "审核成功",
+	})
+}

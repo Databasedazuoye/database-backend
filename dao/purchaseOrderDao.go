@@ -24,7 +24,7 @@ func PurchaseOrderGetDetail() []model.PurchaseOrderView {
 	sql := `
 select result.*, supplier.name as supplier_name from
     (select result.*, goods.name as goods_name from
-        (select purchase_order.*, warehouse.name as warehouse_name from purchase_order left join	supplier on supplier.id = purchase_order.supplier_id )
+        (select purchase_order.*, warehouse.name as warehouse_name from purchase_order left join	warehouse on warehouse.id = purchase_order.warehouse_id )
             result
             left join goods on goods.id = result.goods_id
     ) result
@@ -34,8 +34,17 @@ select result.*, supplier.name as supplier_name from
 
 	err := db.SQL(sql).Find(&list)
 	if err != nil {
-		panic(err)
 	}
 
 	return list
+}
+
+func Review(id int, status string) int64 {
+	db := utils.GetDb()
+	order := model.PurchaseOrder{Status: status}
+	update, err := db.Id(id).Update(&order)
+	if err != nil {
+		panic(err)
+	}
+	return update
 }

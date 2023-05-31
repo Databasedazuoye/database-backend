@@ -48,6 +48,7 @@ func Router() *gin.Engine {
 	{
 		purchaseOrder.GET("/create", service.CreateOrder)
 		purchaseOrder.GET("", service.QueryPurchaseOrderDetail)
+		purchaseOrder.GET("/review", service.Review)
 	}
 
 	r.GET("/test", service.Test)

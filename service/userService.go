@@ -7,6 +7,7 @@ import (
 	"goodsManagement/dao"
 	"goodsManagement/model"
 	utils "goodsManagement/utils"
+	"strings"
 	"time"
 )
 
@@ -45,10 +46,13 @@ func Login(c *gin.Context) {
 	user := model.User{}
 	c.ShouldBindJSON(&user)
 
+	fmt.Println(user.Username)
+	fmt.Println(utils.SHA256Hash(user.Password))
+
 	userList := dao.GetUser(user.Username, utils.SHA256Hash(user.Password))
 
 	if len(userList) == 0 {
-		c.JSON(403, gin.H{
+		c.JSON(400, gin.H{
 			"msg": "账号或密码输入有误",
 		})
 		return
@@ -60,8 +64,10 @@ func Login(c *gin.Context) {
 		"data": token,
 	})
 
+	permissions := dao.GetPermissions(userList[0].Id)
+
 	ctx := context.Background()
-	if err := utils.GetRedisHelper().Set(ctx, token, dao.GetPermissions(userList[0].Id), time.Hour*24).Err(); err != nil {
+	if err := utils.GetRedisHelper().Set(ctx, token, strings.Join(permissions, "|"), time.Hour*24).Err(); err != nil {
 		panic(err)
 	}
 

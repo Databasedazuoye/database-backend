@@ -1,10 +1,8 @@
 package dao
 
 import (
-	"fmt"
 	"goodsManagement/model"
 	"goodsManagement/utils"
-	"strconv"
 )
 
 func WarehouseInsert(warehouse model.Warehouse) int64 {
@@ -19,7 +17,6 @@ func WarehouseInsert(warehouse model.Warehouse) int64 {
 
 func WarehouseUpdate(warehouse model.Warehouse) int64 {
 	db := utils.GetDb()
-	fmt.Println("id:" + strconv.Itoa(warehouse.Id))
 	update, err := db.Id(warehouse.Id).Update(warehouse)
 	if err != nil {
 		panic(err)

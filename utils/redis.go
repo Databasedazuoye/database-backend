@@ -31,7 +31,8 @@ func NewRedisHelper() *redis.Client {
 		WriteTimeout: 30 * time.Second,
 		PoolSize:     10,
 		PoolTimeout:  30 * time.Second,
-	})
+	},
+	)
 
 	redisOnce.Do(func() {
 		rdh := new(RedisHelper)
