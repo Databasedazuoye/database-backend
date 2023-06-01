@@ -11,7 +11,7 @@ func SalesOrderGetDetail() {
 	//db.SQL()
 }
 
-func CreateSalesOrder(salesOrder model.SalesOrder) int64 {
+func SalesOrderInsert(salesOrder model.SalesOrder) int64 {
 	db := utils.GetDb()
 	insert, err := db.Insert(salesOrder)
 	if err != nil {

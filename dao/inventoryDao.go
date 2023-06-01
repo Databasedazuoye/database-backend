@@ -18,7 +18,7 @@ func InventoryGetByWarehouseId(id int64) []model.InventoryDTO {
 	return list
 }
 
-func InventoryGetByWarehouseIdAndGoodsId(warehouseId int, goodsId int) *model.Inventory {
+func InventoryGetByWarehouseIdAndGoodsId(warehouseId int64, goodsId int64) *model.Inventory {
 	db := utils.GetDb()
 	inventory := &model.Inventory{}
 	get, err := db.Where("warehouse_id = ? and goods_id = ?", warehouseId, goodsId).Get(inventory)
