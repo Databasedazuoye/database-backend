@@ -5,11 +5,6 @@ import (
 	"goodsManagement/utils"
 )
 
-func getOrder() {
-	db := utils.GetDb()
-	db.SQL("select ")
-}
-
 func CreateOrder(order *model.PurchaseOrder) int64 {
 	db := utils.GetDb()
 	insert, err := db.Insert(order)
@@ -30,10 +25,12 @@ select result.*, supplier.name as supplier_name from
     ) result
         left join supplier on result.supplier_id = supplier.id
         `
+
 	list := make([]model.PurchaseOrderView, 0)
 
 	err := db.SQL(sql).Find(&list)
 	if err != nil {
+		panic(err)
 	}
 
 	return list
@@ -47,4 +44,11 @@ func Review(id int, status string) int64 {
 		panic(err)
 	}
 	return update
+}
+
+func PurchaseOrderGetById(id int) *model.PurchaseOrder {
+	db := utils.GetDb()
+	purchaseOrder := new(model.PurchaseOrder)
+	db.Id(id).Find(purchaseOrder)
+	return purchaseOrder
 }

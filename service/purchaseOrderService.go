@@ -65,6 +65,15 @@ func Review(c *gin.Context) {
 	id, _ := strconv.Atoi(c.Query("id"))
 
 	var s string
+
+	purchaseOrder := dao.PurchaseOrderGetById(id)
+	if purchaseOrder.Status != "未审核" {
+		c.JSON(400, gin.H{
+			"msg": "审核失败，请勿审核已审核的订单",
+		})
+		return
+	}
+
 	if param == "1" {
 		s = "审核通过"
 	} else {
