@@ -17,6 +17,7 @@ func Router() *gin.Engine {
 		users.POST("/register", service.Register)
 		users.POST("/login", service.Login)
 		users.GET("/permission", middleware.AuthMiddleware(), service.GetPermission)
+		users.DELETE("", middleware.AuthMiddleware(), service.LogOut)
 	}
 
 	goods := r.Group("/goods")

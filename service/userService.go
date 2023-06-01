@@ -61,7 +61,8 @@ func Login(c *gin.Context) {
 	token := utils.GetToken(user.Username, userList[0].Id)
 
 	c.JSON(200, gin.H{
-		"data": token,
+		"data":     token,
+		"username": user.Username,
 	})
 
 	permissions := dao.GetPermissions(userList[0].Id)
@@ -84,5 +85,19 @@ func GetPermission(c *gin.Context) {
 }
 
 func LogOut(c *gin.Context) {
+	ctx := context.Background()
+	token := c.GetHeader("Authorization")
+	del := utils.GetRedisHelper().Del(ctx, token)
+	result, _ := del.Result()
+	if result == 1 {
+		c.JSON(200, gin.H{
+			"msg": "退出成功",
+		})
+		return
+	} else {
+		c.JSON(400, gin.H{
+			"msg": "退出失败",
+		})
+	}
 
 }
