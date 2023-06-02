@@ -31,3 +31,14 @@ func InventoryGetByWarehouseIdAndGoodsId(warehouseId int64, goodsId int64) *mode
 
 	return inventory
 }
+
+func DecreaseStock(goodsId int, warehouseId int, num int) int64 {
+	db := utils.GetDb()
+	sql := `update inventory set stock = stock - ? where goods_id = ? and warehouse_id = ?`
+	detail, err := db.Exec(sql, num, goodsId, warehouseId)
+	if err != nil {
+		panic(err)
+	}
+	affected, _ := detail.RowsAffected()
+	return affected
+}

@@ -47,3 +47,21 @@ func SalesOrderUpdateById(id int, status string) int64 {
 	return update
 }
 
+func SaleOrderGetById(id int) (model.SalesOrder, bool) {
+	db := utils.GetDb()
+	salesOrder := model.SalesOrder{}
+	get, err := db.Id(id).Get(&salesOrder)
+	if err != nil {
+		panic(err)
+	}
+	return salesOrder, get
+}
+
+func SalesOrderUpdateBillById(id int, billId int) {
+	db := utils.GetDb()
+	sql := `update sales_order set bill_id = ? where id = ?`
+	_, err := db.Exec(sql, billId, id)
+	if err != nil {
+		panic(err)
+	}
+}

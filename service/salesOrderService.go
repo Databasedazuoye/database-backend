@@ -5,6 +5,7 @@ import (
 	"goodsManagement/dao"
 	"goodsManagement/model"
 	"goodsManagement/utils"
+	"strconv"
 	"time"
 )
 
@@ -48,4 +49,30 @@ func SalesOrderGetAll(c *gin.Context) {
 	c.JSON(200, gin.H{
 		"data": list,
 	})
+}
+
+func SaleOrderReview(c *gin.Context) {
+	value := c.Query("id")
+	id, _ := strconv.Atoi(value)
+	salesOrder, get := dao.SaleOrderGetById(id)
+	if !get {
+		c.JSON(400, gin.H{
+			"msg": "不存在此记录",
+		})
+	}
+	inventory := dao.InventoryGetByWarehouseIdAndGoodsId(int64(salesOrder.WarehouseId), int64(salesOrder.GoodsId))
+	if inventory.Stock-salesOrder.Num < 0 {
+		c.JSON(400, gin.H{
+			"msg": "库存不足",
+		})
+		return
+	}
+	i := dao.SalesOrderUpdateById(id, "审核通过")
+	if i == 0 {
+		c.JSON(400, gin.H{
+			"msg": "请勿重复审核",
+		})
+	}
+	dao.DecreaseStock(salesOrder.GoodsId, salesOrder.WarehouseId, salesOrder.Num)
+
 }

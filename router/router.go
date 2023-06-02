@@ -61,6 +61,13 @@ func Router() *gin.Engine {
 	{
 		salesOrder.GET("/create", service.SalesOrderInsert)
 		salesOrder.GET("", service.SalesOrderGetAll)
+		salesOrder.GET("/review", service.SaleOrderReview)
+	}
+
+	bill := r.Group("/bill")
+	{
+		bill.POST("", service.BillCreate)
+		bill.GET("", service.BillGetAll)
 	}
 
 	r.GET("/test", service.Test)

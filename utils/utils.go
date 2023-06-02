@@ -21,3 +21,7 @@ func FormatTimeString(timeString string) string {
 	formattedTime := t.Format("2006-01-02 15:04:05")
 	return formattedTime
 }
+
+type Array struct {
+	Array []int64
+}

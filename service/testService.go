@@ -7,7 +7,7 @@ import (
 
 func Test(c *gin.Context) {
 
-	inventory := dao.InventoryGetByWarehouseIdAndGoodsId(1, 1241)
+	id, _ := dao.SaleOrderGetById(0)
 
-	c.JSON(200, inventory)
+	c.JSON(200, id)
 }
