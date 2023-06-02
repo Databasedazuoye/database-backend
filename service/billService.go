@@ -32,6 +32,8 @@ func BillCreate(c *gin.Context) {
 		sum += salesOrder.Price
 
 	}
+	//value, _ := c.Get("id")
+
 	bill := model.Bill{
 		Id:     int(billId),
 		UserId: 1,

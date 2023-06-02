@@ -1,6 +1,7 @@
 package service
 
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"goodsManagement/dao"
 	"goodsManagement/model"
@@ -59,6 +60,7 @@ func Review(c *gin.Context) {
 	var s string
 
 	purchaseOrder := dao.PurchaseOrderGetById(id)
+	fmt.Println(purchaseOrder)
 	if purchaseOrder.Status != "未审核" {
 		c.JSON(400, gin.H{
 			"msg": "审核失败，请勿审核已审核的订单",

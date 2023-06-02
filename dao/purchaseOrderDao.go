@@ -48,7 +48,11 @@ func Review(id int, status string) int64 {
 
 func PurchaseOrderGetById(id int) *model.PurchaseOrder {
 	db := utils.GetDb()
-	purchaseOrder := new(model.PurchaseOrder)
-	db.Id(id).Find(purchaseOrder)
+	//purchaseOrder := new(model.PurchaseOrder)
+	purchaseOrder := &model.PurchaseOrder{}
+	_, err := db.Id(id).Get(purchaseOrder)
+	if err != nil {
+		panic(err)
+	}
 	return purchaseOrder
 }

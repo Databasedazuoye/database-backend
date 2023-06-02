@@ -66,7 +66,7 @@ func Router() *gin.Engine {
 
 	bill := r.Group("/bill")
 	{
-		bill.POST("", service.BillCreate)
+		bill.POST("", middleware.AuthMiddleware(), service.BillCreate)
 		bill.GET("", service.BillGetAll)
 	}
 
