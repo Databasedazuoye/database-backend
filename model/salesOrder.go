@@ -19,7 +19,7 @@ type SalesOrderDTO struct {
 	Num           int
 	Price         float64
 	Date          string
-	status        string
+	Status        string
 	GoodsName     string
 	WarehouseName string
 }

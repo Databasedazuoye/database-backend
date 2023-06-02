@@ -4,6 +4,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"goodsManagement/dao"
 	"goodsManagement/model"
+	"goodsManagement/utils"
 	"strconv"
 	"time"
 )
@@ -44,20 +45,11 @@ func CreateOrder(c *gin.Context) {
 func QueryPurchaseOrderDetail(c *gin.Context) {
 	detail := dao.PurchaseOrderGetDetail()
 	for idx, item := range detail {
-		detail[idx].Date = formatTimeString(item.Date)
+		detail[idx].Date = utils.FormatTimeString(item.Date)
 	}
 	c.JSON(200, gin.H{
 		"data": detail,
 	})
-}
-
-func formatTimeString(timeString string) string {
-	t, err := time.Parse(time.RFC3339, timeString)
-	if err != nil {
-		panic(err)
-	}
-	formattedTime := t.Format("2006-01-02 15:04:05")
-	return formattedTime
 }
 
 func Review(c *gin.Context) {

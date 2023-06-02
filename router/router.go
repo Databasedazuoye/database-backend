@@ -57,6 +57,12 @@ func Router() *gin.Engine {
 		inventory.GET("/:id", service.InventoryGetByWarehouseId)
 	}
 
+	salesOrder := r.Group("/sale")
+	{
+		salesOrder.GET("/create", service.SalesOrderInsert)
+		salesOrder.GET("", service.SalesOrderGetAll)
+	}
+
 	r.GET("/test", service.Test)
 
 	return r
