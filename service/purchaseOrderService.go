@@ -56,10 +56,6 @@ func QueryPurchaseOrderDetail(c *gin.Context) {
 func Review(c *gin.Context) {
 	param := c.Query("status")
 	id, _ := strconv.Atoi(c.Query("id"))
-	fmt.Println("***************************")
-	fmt.Println(param)
-	fmt.Println(id)
-	fmt.Println("***************************")
 
 	var s string
 
@@ -84,9 +80,11 @@ func Review(c *gin.Context) {
 		})
 		return
 	}
+
 	c.JSON(200, gin.H{
 		"msg": "审核成功",
 	})
+
 }
 
 func PurchaseOrderDeleteById(c *gin.Context) {

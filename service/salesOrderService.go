@@ -1,6 +1,7 @@
 package service
 
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"goodsManagement/dao"
 	"goodsManagement/model"
@@ -76,4 +77,40 @@ func SaleOrderReview(c *gin.Context) {
 	}
 	dao.DecreaseStock(salesOrder.GoodsId, salesOrder.WarehouseId, salesOrder.Num)
 
+	////////////////////////////////////////////
+	billId := generateID()
+	var sum float64
+	salesOrder, b := dao.SaleOrderGetById(id)
+	if !b {
+		c.JSON(400, gin.H{
+			"msg": "不存在此记录",
+		})
+		return
+	}
+	dao.SalesOrderUpdateBillById(salesOrder.Id, billId)
+	sum += salesOrder.Price
+
+	bill := model.Bill{
+		Id:     int(billId),
+		UserId: 1,
+		Total:  sum,
+		Date:   time.Now().Format("2006-01-02 15:04:05"),
+	}
+	dao.BillInsert(bill)
+	c.JSON(200, gin.H{
+		"msg": "成功生成订单",
+	})
+}
+
+func generateID() int {
+	timestamp := time.Now().Unix()
+	// 假设时间戳是 int64 类型，将其转换为字符串并截取后8位
+	timestampStr := fmt.Sprintf("%d", timestamp)
+	idStr := timestampStr[len(timestampStr)-8:]
+	var id int
+	_, err := fmt.Sscanf(idStr, "%d", &id)
+	if err != nil {
+		panic(err)
+	}
+	return id
 }

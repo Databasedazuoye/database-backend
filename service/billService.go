@@ -47,18 +47,6 @@ func BillCreate(c *gin.Context) {
 	})
 
 }
-func generateID() int {
-	timestamp := time.Now().Unix()
-	// 假设时间戳是 int64 类型，将其转换为字符串并截取后8位
-	timestampStr := fmt.Sprintf("%d", timestamp)
-	idStr := timestampStr[len(timestampStr)-8:]
-	var id int
-	_, err := fmt.Sscanf(idStr, "%d", &id)
-	if err != nil {
-		panic(err)
-	}
-	return id
-}
 
 func BillGetAll(c *gin.Context) {
 	list := dao.BillSelectAll()
