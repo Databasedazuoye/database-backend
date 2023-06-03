@@ -16,3 +16,14 @@ func BillSelectAll() []model.Bill {
 	db.Find(&billList)
 	return billList
 }
+
+func BillGetById(id int) *model.Bill {
+	db := utils.GetDb()
+	bill := new(model.Bill)
+	_, err := db.Id(id).Get(bill)
+	if err != nil {
+		panic(err)
+	}
+
+	return bill
+}

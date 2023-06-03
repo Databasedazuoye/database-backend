@@ -6,6 +6,7 @@ import (
 	"goodsManagement/dao"
 	"goodsManagement/model"
 	"goodsManagement/utils"
+	"strconv"
 	"time"
 )
 
@@ -63,5 +64,15 @@ func BillGetAll(c *gin.Context) {
 	list := dao.BillSelectAll()
 	c.JSON(200, gin.H{
 		"data": list,
+	})
+}
+
+func BillGetById(c *gin.Context) {
+	i := c.Param("id")
+	id, _ := strconv.Atoi(i)
+	fmt.Println(id)
+	bill := dao.BillGetById(id)
+	c.JSON(200, gin.H{
+		"data": bill,
 	})
 }

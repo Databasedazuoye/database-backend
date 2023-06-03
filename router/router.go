@@ -71,6 +71,7 @@ func Router() *gin.Engine {
 	{
 		bill.POST("", middleware.AuthMiddleware(), service.BillCreate)
 		bill.GET("", service.BillGetAll)
+		bill.GET(":id", service.BillGetById)
 	}
 
 	r.GET("/test", service.Test)

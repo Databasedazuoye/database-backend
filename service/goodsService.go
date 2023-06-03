@@ -74,6 +74,6 @@ func GoodsGetByNameLike(c *gin.Context) {
 	name := c.Query("name")
 	like := dao.GoodsGetByNameLike(name)
 	c.JSON(200, gin.H{
-		"msg": like,
+		"data": like,
 	})
 }
