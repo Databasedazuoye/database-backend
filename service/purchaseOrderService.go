@@ -88,3 +88,23 @@ func Review(c *gin.Context) {
 		"msg": "审核成功",
 	})
 }
+
+func PurchaseOrderDeleteById(c *gin.Context) {
+	param := c.Param("id")
+	id, err := strconv.Atoi(param)
+	if err != nil {
+		panic(err)
+	}
+
+	i := dao.PurchaseOrderDeleteById(id)
+	if i == 0 {
+		c.JSON(400, gin.H{
+			"msg": "删除失败",
+		})
+		return
+	}
+	c.JSON(200, gin.H{
+		"msg": "删除成功",
+	})
+
+}

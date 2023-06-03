@@ -1,6 +1,7 @@
 package dao
 
 import (
+	"fmt"
 	"goodsManagement/model"
 	"goodsManagement/utils"
 )
@@ -51,8 +52,14 @@ func GoodsGetById(id int64) *model.Goods {
 	return goods
 }
 
-//func GoodsGetByNameLike(name string) {
-//	db := utils.GetDb()
-//	list := make([]model.Goods, 0)
-//	db.Where("name like ?", fmt.Sprintf(%%%%))
-//}
+func GoodsGetByNameLike(name string) []model.Goods {
+	db := utils.GetDb()
+	list := make([]model.Goods, 0)
+	err := db.Where("name like ?", fmt.Sprintf("%%%s%%"), name).Find(&list)
+	if err != nil {
+		panic(err)
+	}
+
+	return list
+
+}

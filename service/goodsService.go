@@ -69,3 +69,9 @@ func GoodsDeleteById(c *gin.Context) {
 		})
 	}
 }
+
+func GoodsGetByNameLike(c *gin.Context) {
+	name := c.Query("name")
+	dao.GoodsGetByNameLike(name)
+	c.JSON(200, gin.H{})
+}
