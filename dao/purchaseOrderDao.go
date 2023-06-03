@@ -19,7 +19,8 @@ func PurchaseOrderGetDetail() []model.PurchaseOrderView {
 	sql := `
 select result.*, supplier.name as supplier_name from
     (select result.*, goods.name as goods_name from
-        (select purchase_order.*, warehouse.name as warehouse_name from purchase_order left join	warehouse on warehouse.id = purchase_order.warehouse_id )
+        (select purchase_order.*, warehouse.name as warehouse_name from purchase_order
+            left join	warehouse on warehouse.id = purchase_order.warehouse_id )
             result
             left join goods on goods.id = result.goods_id
     ) result

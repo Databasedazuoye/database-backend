@@ -15,7 +15,9 @@ func GetUser(username string, password string) []model.User {
 
 func GetPermissions(userId int) []string {
 	db := utils.GetDb()
-	sql := "select name from permission where id in (select permission_id from role_permission where role_id = (select role_id from user_role where user_id = ?)) "
+	sql := `select name from permission where id in 
+                  (select permission_id from role_permission where role_id = 
+                          (select role_id from user_role where user_id = ?)) `
 
 	var permissionList []string
 

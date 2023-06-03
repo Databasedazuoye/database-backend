@@ -50,3 +50,9 @@ func GoodsGetById(id int64) *model.Goods {
 	}
 	return goods
 }
+
+//func GoodsGetByNameLike(name string) {
+//	db := utils.GetDb()
+//	list := make([]model.Goods, 0)
+//	db.Where("name like ?", fmt.Sprintf(%%%%))
+//}
