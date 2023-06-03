@@ -27,11 +27,21 @@ func SupplierUpdate(supplier model.Supplier) int64 {
 
 func SupplierDeleteById(id int64) int64 {
 	db := utils.GetDb()
+
+	sql := `select * from purchase_order where supplier_id = ?`
+	list := make([]model.PurchaseOrder, 0)
+	err := db.SQL(sql, id).Find(&list)
+	if len(list) != 0 {
+		return 0
+	}
+
 	supplier := model.Supplier{}
-	i, err := db.Id(id).Delete(supplier)
+	i, _ := db.Id(id).Delete(supplier)
+
 	if err != nil {
 		panic(err)
 	}
+
 	return i
 }
 
