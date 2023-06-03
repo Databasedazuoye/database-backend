@@ -26,6 +26,7 @@ func Router() *gin.Engine {
 		goods.PUT("", service.GoodsUpdate)
 		goods.DELETE("/:id", service.GoodsDeleteById)
 		goods.GET("", service.GoodsSelectAll)
+		goods.GET("/nameLike", service.GoodsGetByNameLike)
 
 	}
 

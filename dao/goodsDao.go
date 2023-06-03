@@ -55,11 +55,10 @@ func GoodsGetById(id int64) *model.Goods {
 func GoodsGetByNameLike(name string) []model.Goods {
 	db := utils.GetDb()
 	list := make([]model.Goods, 0)
-	err := db.Where("name like ?", fmt.Sprintf("%%%s%%"), name).Find(&list)
+	err := db.Where("name like ?", fmt.Sprintf("%%%s%%", name)).Find(&list)
 	if err != nil {
 		panic(err)
 	}
-
 	return list
 
 }
