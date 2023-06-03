@@ -73,6 +73,11 @@ func GoodsDeleteById(c *gin.Context) {
 func GoodsGetByNameLike(c *gin.Context) {
 	name := c.Query("name")
 	like := dao.GoodsGetByNameLike(name)
+	for idx, item := range like {
+		like[idx].ExpirationDate = strings.Split(item.ExpirationDate, "T")[0]
+		like[idx].ManufactureDate = strings.Split(item.ManufactureDate, "T")[0]
+		like[idx].PurchaseDate = strings.Split(item.PurchaseDate, "T")[0]
+	}
 	c.JSON(200, gin.H{
 		"data": like,
 	})

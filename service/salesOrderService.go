@@ -18,6 +18,7 @@ func SalesOrderInsert(c *gin.Context) {
 		c.JSON(400, gin.H{
 			"msg": "库存不足，出库失败",
 		})
+		return
 	}
 	goods := dao.GoodsGetById(goodsId)
 
