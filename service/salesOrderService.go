@@ -74,6 +74,7 @@ func SaleOrderReview(c *gin.Context) {
 		c.JSON(400, gin.H{
 			"msg": "请勿重复审核",
 		})
+		return
 	}
 	dao.DecreaseStock(salesOrder.GoodsId, salesOrder.WarehouseId, salesOrder.Num)
 
