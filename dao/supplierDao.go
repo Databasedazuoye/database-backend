@@ -1,6 +1,7 @@
 package dao
 
 import (
+	"fmt"
 	"goodsManagement/model"
 	"goodsManagement/utils"
 )
@@ -39,4 +40,15 @@ func SupplierSelectAll() []model.Supplier {
 	supplierList := make([]model.Supplier, 0)
 	db.Find(&supplierList)
 	return supplierList
+}
+
+func SupplierGetByNameLike(name string) []model.Supplier {
+	db := utils.GetDb()
+	list := make([]model.Supplier, 0)
+	err := db.Where("name like ?", fmt.Sprintf("%%%s%%", name)).Find(&list)
+	if err != nil {
+		panic(err)
+	}
+	return list
+
 }

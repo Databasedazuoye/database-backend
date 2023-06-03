@@ -44,6 +44,7 @@ func Router() *gin.Engine {
 		supplier.POST("", service.SupplierInsert)
 		supplier.PUT("", service.SupplierUpdate)
 		supplier.DELETE("/:id", service.SupplierDeleteById)
+		supplier.GET("/nameLike", service.SupplierGetByNameLike)
 	}
 
 	purchaseOrder := r.Group("/purchase")
