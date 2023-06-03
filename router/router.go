@@ -65,7 +65,7 @@ func Router() *gin.Engine {
 		salesOrder.GET("/create", service.SalesOrderInsert)
 		salesOrder.GET("", service.SalesOrderGetAll)
 		salesOrder.GET("/review", service.SaleOrderReview)
-
+		salesOrder.DELETE("/:id", service.SalesOrderDeleteById)
 	}
 
 	bill := r.Group("/bill")

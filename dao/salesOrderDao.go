@@ -65,3 +65,12 @@ func SalesOrderUpdateBillById(id int, billId int) {
 		panic(err)
 	}
 }
+
+func SaleOrderDeleteById(id int) int64 {
+	db := utils.GetDb()
+	i, err := db.Id(id).Delete(model.SalesOrder{})
+	if err != nil {
+		panic(err)
+	}
+	return i
+}

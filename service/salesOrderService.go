@@ -115,3 +115,22 @@ func generateID() int {
 	}
 	return id
 }
+
+func SalesOrderDeleteById(c *gin.Context) {
+	param := c.Param("id")
+	id, err := strconv.Atoi(param)
+	if err != nil {
+		panic(err)
+	}
+	i := dao.SaleOrderDeleteById(id)
+	if i == 0 {
+		c.JSON(400, gin.H{
+			"msg": "删除失败",
+		})
+		return
+	}
+	c.JSON(200, gin.H{
+		"msg": "删除成功",
+	})
+
+}
